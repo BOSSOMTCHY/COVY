@@ -22,13 +22,20 @@ import com.example.covy.ui.components.*
 import com.example.covy.ui.theme.*
 
 /**
- * Écran 4 : Récupération de compte Covy (03 / 30)
+ * ÉCRAN 4 : Récupération de compte Covy (03 / 30)
+ *
+ * Permet à l'utilisateur de saisir son numéro de téléphone associé
+ * afin de recevoir un code SMS de vérification à 6 chiffres.
+ *
+ * @param onNavigateBack Retour à l'écran de connexion
+ * @param onSendCodeSuccess Action suite à l'envoi du code -> Redirige vers 04/30
  */
 @Composable
 fun ForgotPasswordScreen(
     onNavigateBack: () -> Unit,
     onSendCodeSuccess: (String) -> Unit
 ) {
+    // Numéro de téléphone saisi pour la réinitialisation
     var phoneNumber by remember { mutableStateOf("+225 07 01 23 45 67") }
 
     Column(
@@ -36,12 +43,13 @@ fun ForgotPasswordScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // En-tête avec étape 03 / 30
+        // En-tête avec flèche retour et étape "03 / 30"
         CovyHeader(
             stepText = "03 / 30",
             onBackClick = onNavigateBack
         )
 
+        // Corps de la page avec défilement
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,7 +57,7 @@ fun ForgotPasswordScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            // Tag / Catégorie
+            // Sur-titre / Catégorie
             Text(
                 text = "ACCÈS • RÉCUPÉRATION",
                 fontSize = 11.sp,
@@ -60,7 +68,7 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Titre
+            // Titre principal
             Text(
                 text = "Retrouvez votre compte",
                 fontSize = 26.sp,
@@ -79,7 +87,7 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Carte d'information téléphone
+            // Carte d'information explicative
             CovyInfoCard(
                 icon = Icons.Outlined.Smartphone,
                 title = "Un code à 6 chiffres",
@@ -88,7 +96,7 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Champ Numéro de Téléphone
+            // Champ de saisie : Téléphone associé au compte
             CovyTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
@@ -100,7 +108,7 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Message d'information
+            // Information supplémentaire
             Text(
                 text = "Après vérification, vous pourrez définir un nouveau mot de passe.",
                 fontSize = 12.sp,
@@ -110,13 +118,14 @@ fun ForgotPasswordScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // Zone d'action au bas de la page
+        // Zone d'action fixe en bas
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Bouton principal : "Envoyer le code SMS"
             CovyButton(
                 text = "Envoyer le code SMS",
                 onClick = { onSendCodeSuccess(phoneNumber) }
@@ -124,6 +133,7 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Lien : "Retour à la connexion"
             Text(
                 text = "Retour à la connexion",
                 fontSize = 13.sp,

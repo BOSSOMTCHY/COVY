@@ -20,7 +20,21 @@ import com.example.covy.ui.theme.VertCovy
 import com.example.covy.ui.theme.VertFonce
 
 /**
- * Carte d'information verte réutilisable pour les consignes et conseils.
+ * COMPOSANT : Carte d'Information (InfoCard)
+ * Carte arrondie à fond vert vert-clair utilisée pour afficher des conseils ou consignes.
+ *
+ * Exexmples d'utilisation :
+ * - "Un dossier pour chaque profil" sur l'écran Bienvenue
+ * - "Votre compte, votre trajet" sur l'écran Connexion
+ * - "Un code à 6 chiffres" sur l'écran Récupération
+ * - "Consultez vos SMS" sur l'écran Vérification
+ *
+ * @param modifier Modificateurs Compose
+ * @param icon Icône vectorielle affichée dans un petit carré blanc
+ * @param title Titre en gras de la carte
+ * @param description Description détaillée ou consigne
+ * @param backgroundColor Couleur de fond de la carte (VertCovy par défaut)
+ * @param iconTintColor Couleur de l'icône (VertFonce par défaut)
  */
 @Composable
 fun CovyInfoCard(
@@ -39,9 +53,11 @@ fun CovyInfoCard(
             .padding(16.dp)
     ) {
         Column {
+            // Ligne du haut : Petit carré d'icône blanc + Titre
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Petit carré blanc contenant l'icône
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -59,6 +75,7 @@ fun CovyInfoCard(
 
                 Spacer(modifier = Modifier.width(12.dp))
 
+                // Titre de la carte
                 Text(
                     text = title,
                     color = TextBlack,
@@ -69,6 +86,7 @@ fun CovyInfoCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Texte de description
             Text(
                 text = description,
                 color = TextGray,

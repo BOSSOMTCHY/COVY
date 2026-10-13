@@ -22,7 +22,15 @@ import com.example.covy.ui.components.*
 import com.example.covy.ui.theme.*
 
 /**
- * Écran 3 : Connexion Covy (02 / 30)
+ * ÉCRAN 3 : Connexion Covy (02 / 30)
+ *
+ * Écran de saisie des identifiants (Numéro de téléphone et Mot de passe).
+ * Comporte un lien "Mot de passe oublié ?" menant vers l'écran 03/30.
+ *
+ * @param onNavigateBack Retour à l'écran précédent
+ * @param onNavigateToForgotPassword Direction vers la récupération de mot de passe (03/30)
+ * @param onNavigateToRegister Direction vers la création de compte
+ * @param onLoginSuccess Validation de la connexion
  */
 @Composable
 fun LoginScreen(
@@ -31,6 +39,7 @@ fun LoginScreen(
     onNavigateToRegister: () -> Unit,
     onLoginSuccess: () -> Unit
 ) {
+    // États locaux stockant les valeurs saisies par l'utilisateur
     var phoneNumber by remember { mutableStateOf("+225 07 01 23 45 67") }
     var password by remember { mutableStateOf("") }
 
@@ -39,12 +48,13 @@ fun LoginScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // En-tête avec flèche retour et étape 02 / 30
+        // En-tête avec flèche retour et étape "02 / 30"
         CovyHeader(
             stepText = "02 / 30",
             onBackClick = onNavigateBack
         )
 
+        // Corps de la page avec défilement
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -52,7 +62,7 @@ fun LoginScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            // Tag / Catégorie
+            // Sur-titre / Catégorie
             Text(
                 text = "ACCÈS AU COMPTE",
                 fontSize = 11.sp,
@@ -63,7 +73,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Titre
+            // Titre de bienvenue
             Text(
                 text = "Bon retour !",
                 fontSize = 26.sp,
@@ -82,7 +92,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Carte d'information avec clé
+            // Carte explicative verte avec icône clé
             CovyInfoCard(
                 icon = Icons.Outlined.Key,
                 title = "Votre compte, votre trajet.",
@@ -91,20 +101,19 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Champ Numéro de Téléphone
+            // Champ de saisie : Numéro de téléphone
             CovyTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
                 label = "Numéro de téléphone",
                 placeholder = "+225 07 00 00 00 00",
-                leadingIcon = null,
                 trailingIcon = Icons.Outlined.Phone,
                 keyboardType = KeyboardType.Phone
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Champ Mot de Passe
+            // Champ de saisie : Mot de passe
             CovyTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -115,7 +124,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Lien Mot de passe oublié
+            // Lien "Mot de passe oublié ?" (Redirige vers l'écran 03/30)
             Text(
                 text = "Mot de passe oublié ?",
                 fontSize = 13.sp,
@@ -129,13 +138,14 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // Zone d'action au bas de la page
+        // Zone d'action fixe en bas
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Bouton vert principal : "Se connecter"
             CovyButton(
                 text = "Se connecter",
                 onClick = onLoginSuccess
@@ -143,6 +153,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Lien : "Nouveau sur Covy ? Créer un compte"
             Text(
                 text = "Nouveau sur Covy ? Créer un compte",
                 fontSize = 13.sp,

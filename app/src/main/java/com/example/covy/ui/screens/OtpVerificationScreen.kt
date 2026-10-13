@@ -20,7 +20,15 @@ import com.example.covy.ui.components.*
 import com.example.covy.ui.theme.*
 
 /**
- * Écran 5 : Vérification SMS OTP Covy (04 / 30)
+ * ÉCRAN 5 : Vérification SMS OTP Covy (04 / 30)
+ *
+ * Écran de saisie du code à 6 chiffres reçu par SMS.
+ * Propose une grille de 6 cases numérotées et la possibilité de renvoyer le code.
+ *
+ * @param phoneNumber Numéro vers lequel le SMS a été envoyé
+ * @param onNavigateBack Action pour modifier le numéro ou revenir en arrière
+ * @param onVerifySuccess Validation du code SMS
+ * @param onResendCode Action pour renvoyer le SMS
  */
 @Composable
 fun OtpVerificationScreen(
@@ -29,6 +37,7 @@ fun OtpVerificationScreen(
     onVerifySuccess: () -> Unit,
     onResendCode: () -> Unit
 ) {
+    // Code à 6 chiffres saisi par l'utilisateur (pré-rempli avec 382916 d'après la maquette)
     var otpCode by remember { mutableStateOf("382916") }
 
     Column(
@@ -36,12 +45,13 @@ fun OtpVerificationScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // En-tête avec étape 04 / 30
+        // En-tête avec flèche retour et étape "04 / 30"
         CovyHeader(
             stepText = "04 / 30",
             onBackClick = onNavigateBack
         )
 
+        // Corps de la page avec défilement
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,7 +59,7 @@ fun OtpVerificationScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            // Tag / Catégorie
+            // Sur-titre / Catégorie
             Text(
                 text = "ACCÈS • VÉRIFICATION",
                 fontSize = 11.sp,
@@ -60,7 +70,7 @@ fun OtpVerificationScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Titre
+            // Titre principal
             Text(
                 text = "Vérifiez votre numéro",
                 fontSize = 26.sp,
@@ -70,7 +80,7 @@ fun OtpVerificationScreen(
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            // Sous-titre avec masque numéro
+            // Sous-titre avec masque du numéro
             Text(
                 text = "Code envoyé au $phoneNumber.",
                 fontSize = 13.sp,
@@ -79,7 +89,7 @@ fun OtpVerificationScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Carte d'information SMS
+            // Carte d'information consigne SMS
             CovyInfoCard(
                 icon = Icons.Outlined.Sms,
                 title = "Consultez vos SMS",
@@ -88,7 +98,7 @@ fun OtpVerificationScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Label de la saisie
+            // Libellé de la saisie OTP
             Text(
                 text = "Code de vérification",
                 fontSize = 13.sp,
@@ -97,7 +107,7 @@ fun OtpVerificationScreen(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Champs de saisie OTP (6 cases)
+            // Grille de saisie à 6 cases numérotées
             OtpInputField(
                 otpText = otpCode,
                 onOtpTextChange = { otpCode = it }
@@ -105,7 +115,7 @@ fun OtpVerificationScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Option "Renvoyer le code"
+            // Bloc "Vous n'avez pas reçu de code ? Renvoyer le code"
             Column(modifier = Modifier.padding(vertical = 4.dp)) {
                 Text(
                     text = "Vous n'avez pas reçu de code ?",
@@ -125,13 +135,14 @@ fun OtpVerificationScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // Zone d'action au bas de la page
+        // Zone d'action fixe en bas
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Bouton principal "Vérifier le code" (Actif seulement si 6 chiffres sont saisis)
             CovyButton(
                 text = "Vérifier le code",
                 onClick = onVerifySuccess,
@@ -140,6 +151,7 @@ fun OtpVerificationScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Lien "Modifier le numéro" -> Retourne à l'étape précédente
             Text(
                 text = "Modifier le numéro",
                 fontSize = 13.sp,

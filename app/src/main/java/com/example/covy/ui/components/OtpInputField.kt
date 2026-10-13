@@ -22,7 +22,12 @@ import com.example.covy.ui.theme.TextBlack
 import com.example.covy.ui.theme.VertFonce
 
 /**
- * Composant de saisie de code OTP à 6 chiffres.
+ * COMPOSANT : Grille de Saisie de Code SMS (OTP) à 6 Chiffres
+ * Affiche 6 cases individuelles arrondies. Chaque case contient 1 chiffre.
+ *
+ * @param otpText Le code saisi actuellement (ex: "382916")
+ * @param onOtpTextChange Callback déclenché à chaque modification du code
+ * @param otpLength Nombre total de chiffres requis (6 par défaut)
  */
 @Composable
 fun OtpInputField(
@@ -31,24 +36,34 @@ fun OtpInputField(
     modifier: Modifier = Modifier,
     otpLength: Int = 6
 ) {
+    // Champ de texte invisible de base servant à capturer la saisie clavier numérique
     BasicTextField(
         value = otpText,
-        onValueChange = { if (it.length <= otpLength && it.all { char -> char.isDigit() }) onOtpTextChange(it) },
+        onValueChange = {
+            // Seuls les chiffres sont acceptés et la longueur ne dépasse pas 6
+            if (it.length <= otpLength && it.all { char -> char.isDigit() }) {
+                onOtpTextChange(it)
+            }
+        },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = modifier.fillMaxWidth(),
         decorationBox = {
+            // Affichage visuel sous forme de 6 carrés/cases
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 repeat(otpLength) { index ->
+                    // Récupère le chiffre correspondant à cette position
                     val char = when {
                         index < otpText.length -> otpText[index].toString()
                         else -> ""
                     }
+                    // Détermine si cette case est la case actuellement ciblée (Focus)
                     val isFocused = otpText.length == index
 
+                    // Dessin du carré individuel de la case
                     Box(
                         modifier = Modifier
                             .width(48.dp)

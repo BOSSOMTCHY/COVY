@@ -28,7 +28,14 @@ import com.example.covy.ui.components.CovyInfoCard
 import com.example.covy.ui.theme.*
 
 /**
- * Écran 2 : Bienvenue Covy (01 / 30)
+ * ÉCRAN 2 : Bienvenue Covy (01 / 30)
+ *
+ * Première étape du parcours d'intégration (Onboarding).
+ * Présente le concept du covoiturage étudiant à Abidjan avec un visuel,
+ * une carte d'information sur les dossiers et deux boutons principaux.
+ *
+ * @param onNavigateToLogin Redirection vers la page de connexion (02/30)
+ * @param onNavigateToRegister Redirection vers la création de compte
  */
 @Composable
 fun WelcomeScreen(
@@ -40,11 +47,12 @@ fun WelcomeScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // En-tête avec étape 01 / 30
+        // En-tête avec indicateur d'étape "01 / 30"
         CovyHeader(
             stepText = "01 / 30"
         )
 
+        // Corps de la page défilable
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -52,7 +60,7 @@ fun WelcomeScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            // Tag / Catégorie
+            // Sur-titre / Catégorie
             Text(
                 text = "BIENVENUE • ABIDJAN",
                 fontSize = 11.sp,
@@ -63,7 +71,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Titre Principal
+            // Titre principal
             Text(
                 text = "Le campus, ensemble.",
                 fontSize = 26.sp,
@@ -82,7 +90,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Illustration représentative (Étudiants et voiture à Abidjan)
+            // Illustration visuelle de la communauté et de la voiture
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -95,25 +103,25 @@ fun WelcomeScreen(
                     val width = size.width
                     val height = size.height
 
-                    // Fond paysage
+                    // Fond paysage vert d'eau
                     drawRect(color = Color(0xFFE8F5E9))
 
-                    // Route
+                    // Bandes de route
                     drawRect(
                         color = Color(0xFFD0E8D6),
                         topLeft = Offset(0f, height * 0.70f),
                         size = Size(width, height * 0.30f)
                     )
 
-                    // Voiture verte
+                    // Silhouette de la voiture verte
                     drawRoundRect(
                         color = VertFonce,
                         topLeft = Offset(width * 0.55f, height * 0.55f),
-                        size = androidx.compose.ui.geometry.Size(width * 0.38f, height * 0.25f),
+                        size = Size(width * 0.38f, height * 0.25f),
                         cornerRadius = CornerRadius(16f, 16f)
                     )
 
-                    // Silhouettes des étudiants
+                    // Silhouettes des 3 étudiants
                     drawCircle(color = Color(0xFF333333), center = Offset(width * 0.20f, height * 0.45f), radius = 22f)
                     drawCircle(color = Color(0xFF004D34), center = Offset(width * 0.32f, height * 0.42f), radius = 24f)
                     drawCircle(color = Color(0xFFF4B41A), center = Offset(width * 0.44f, height * 0.46f), radius = 22f)
@@ -122,7 +130,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Badge vert "Un même trajet, un coût partagé"
+            // Petit badge vert "Un même trajet, un coût partagé"
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
@@ -139,7 +147,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Titre section
+            // Titre de la section
             Text(
                 text = "Moins de frais.\nPlus de sérénité.",
                 fontSize = 22.sp,
@@ -150,7 +158,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Description
+            // Paragraphe explicatif
             Text(
                 text = "Étudiants, élèves et chauffeurs : trouvez votre place sur le chemin des cours.",
                 fontSize = 13.sp,
@@ -159,7 +167,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Carte dossier profil
+            // Carte d'information dossier profil
             CovyInfoCard(
                 icon = Icons.Outlined.Shield,
                 title = "Un dossier pour chaque profil",
@@ -169,13 +177,14 @@ fun WelcomeScreen(
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        // Zone d'action (Boutons au bas de l'écran)
+        // Zone d'action fixe en bas
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Bouton vert principal : "Créer un compte"
             CovyButton(
                 text = "Créer un compte",
                 onClick = onNavigateToRegister
@@ -183,6 +192,7 @@ fun WelcomeScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Bouton lien : "J'ai déjà un compte - Se connecter"
             Text(
                 text = "J'ai déjà un compte - Se connecter",
                 fontSize = 13.sp,

@@ -19,7 +19,17 @@ import androidx.compose.ui.unit.sp
 import com.example.covy.ui.theme.TextGray
 
 /**
- * En-tête standard pour les écrans de parcours Covy.
+ * COMPOSANT : En-tête standard (Header)
+ * Présent en haut des écrans de parcours.
+ *
+ * Contient :
+ * 1. Une flèche de retour arrière (si 'onBackClick' est fourni)
+ * 2. Le logo Covy miniature
+ * 3. Le numéro d'étape à droite (ex: "01 / 30", "02 / 30")
+ *
+ * @param modifier Modificateurs Compose
+ * @param stepText Texte d'étape affiché à droite (ex: "01 / 30"). Si null, rien n'est affiché.
+ * @param onBackClick Action appelée au clic sur la flèche de retour. Si null, pas de flèche.
  */
 @Composable
 fun CovyHeader(
@@ -34,9 +44,11 @@ fun CovyHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        // Partie gauche : Flèche de retour + Logo
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Affichage de la flèche uniquement si un clic de retour est défini
             if (onBackClick != null) {
                 IconButton(
                     onClick = onBackClick,
@@ -44,16 +56,18 @@ fun CovyHeader(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Retour",
+                        contentDescription = "Bouton Retour",
                         tint = Color(0xFF111827)
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
             }
 
+            // Logo Covy miniature
             CovyHeaderLogo()
         }
 
+        // Partie droite : Badge indiquant l'étape (ex: 01 / 30)
         if (stepText != null) {
             Box(
                 modifier = Modifier
