@@ -5,7 +5,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// Palette Material utilisée par toute l'application
+// Palette de couleurs Material 3 configurée pour Covy
 private val PaletteCovy = lightColorScheme(
     primary = VertFonce,
     secondary = VertCovy,
@@ -13,8 +13,11 @@ private val PaletteCovy = lightColorScheme(
     surface = Color.White
 )
 
-// Thème à placer autour de tous les écrans (voir MainActivity)
+// Thème principal à appliquer autour de votre application
 @Composable
-fun ThemeCovy(contenu: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = PaletteCovy, content = contenu)
+fun CovyTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colorScheme = PaletteCovy,
+        content = content
+    )
 }
